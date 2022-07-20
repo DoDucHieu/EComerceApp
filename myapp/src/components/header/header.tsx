@@ -1,7 +1,7 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
-import { Link, useLocation } from 'react-router-dom';
+import { Fragment, useEffect, useRef, useState } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface Navigation {
     name: string;
@@ -9,16 +9,21 @@ interface Navigation {
 }
 
 function classNames(...classes: any) {
-    return classes.filter(Boolean).join(' ');
+    return classes.filter(Boolean).join(" ");
 }
 
 export default function Header() {
     const location = useLocation();
+    const navigate = useNavigate();
     const navigation = [
-        { name: 'Home page', href: '/' },
-        { name: 'Product', href: '/product' },
-        { name: 'Cart', href: '/cart' }
+        { name: "Home page", href: "/" },
+        { name: "Product", href: "/product" },
+        { name: "About", href: "/about" },
     ];
+
+    const handleLogin = () => {
+        navigate("/login");
+    };
     return (
         <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
@@ -47,14 +52,14 @@ export default function Header() {
                                                 className={classNames(
                                                     item.href ===
                                                         location.pathname
-                                                        ? 'bg-gray-900 text-white'
-                                                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                    'px-3 py-2 rounded-md text-sm font-medium'
+                                                        ? "bg-gray-900 text-white"
+                                                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                                    "px-3 py-2 rounded-md text-sm font-medium",
                                                 )}
                                                 aria-current={
                                                     item.href ===
                                                     location.pathname
-                                                        ? 'page'
+                                                        ? "page"
                                                         : undefined
                                                 }
                                             >
@@ -69,9 +74,6 @@ export default function Header() {
                                     type="button"
                                     className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mr-4"
                                 >
-                                    <span className="sr-only">
-                                        View notifications
-                                    </span>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-6 w-6"
@@ -90,17 +92,25 @@ export default function Header() {
                                 <button
                                     type="button"
                                     className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mr-4"
+                                    onClick={handleLogin}
                                 >
-                                    <span className="sr-only">
-                                        View notifications
-                                    </span>
-                                    <BellIcon
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
                                         className="h-6 w-6"
-                                        aria-hidden="true"
-                                    />
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                                        />
+                                    </svg>
                                 </button>
 
-                                {/* Profile dropdown */}
+                                {/* Profile */}
                                 <Menu as="div" className="ml-3 relative">
                                     <div>
                                         <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -122,4 +132,7 @@ export default function Header() {
             )}
         </Disclosure>
     );
+}
+function useHistory() {
+    throw new Error("Function not implemented.");
 }
