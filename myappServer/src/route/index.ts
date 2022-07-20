@@ -1,62 +1,28 @@
-import {Express} from "express";
+import { Express } from "express";
 import middleWare from "../controllers/middleWare";
 
 import userController from "../controllers/userController";
 import productController from "../controllers/productController";
+import authController from "../controllers/authController";
+import userProductController from "../controllers/userProductController";
 
-let routes = (app:Express) => {
-  //sign up
-  app.post("/sign-up", userController.signUp);
-  //login
-//   app.post("/login", userController.login);
+let routes = (app: Express) => {
+  app.get("/", (req, res) => res.send("hello world"));
 
-//   //product
-//   app.get(
-//     "/get-all-product",
-//     middleWare.verifyToken,
-//     productController.getAllProduct
-//   );
+  //auth
+  app.post("/sign-up", authController.signUp);
+  app.post("/login", authController.login);
 
-//   app.post(
-//     "/add-new-product",
-//     middleWare.verifyToken,
-//     productController.addNewProduct
-//   );
+  //user
+  app.put("/update-user", userController.updateUser);
 
-//   app.post(
-//     "/delete-product",
-//     middleWare.verifyToken,
-//     productController.deleteProduct
-//   );
+  //product
+  app.get("/get-all-product", productController.getAllProduct);
+  app.post("/create-new-product", productController.createNewProduct);
 
-//   app.post(
-//     "/edit-product",
-//     middleWare.verifyToken,
-//     productController.editProduct
-//   );
-
-//   app.get(
-//     "/get-all-category",
-//     middleWare.verifyToken,
-//     productController.getAllCategory
-//   );
-
-//   app.post(
-//     "/get-product-by-category",
-//     middleWare.verifyToken,
-//     productController.getProductByCategory
-//   );
-
-//   app.post(
-//     "/get-product-by-search",
-//     middleWare.verifyToken,
-//     productController.getProductBySearch
-//   );
-
-//   //rate
-
-//   app.post("/get-rate", middleWare.verifyToken, productController.getRate);
-//   app.post("/send-rate", middleWare.verifyToken, productController.sendRate);
+  //cart
+  app.post("/add-to-cart", userProductController.addToCart);
+  app.post("/update-cart", userProductController.updateCart);
 };
 
 export default routes;

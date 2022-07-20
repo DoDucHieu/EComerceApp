@@ -63,6 +63,7 @@ const Login = () => {
                             />
                         </div>
                         <button
+                            type="submit"
                             className="block w-full px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-300 transform bg-teal-400 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
                             onClick={handleLogin}
                         >

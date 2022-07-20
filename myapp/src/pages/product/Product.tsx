@@ -1,3 +1,16 @@
+interface Product {
+    userId: string;
+    productId: string;
+    price: number;
+}
+const fakeProduct: Product[] = [
+    {
+        userId: "user1",
+        productId: "product1",
+        price: 10,
+    },
+];
+
 const Product = () => {
     return (
         <>

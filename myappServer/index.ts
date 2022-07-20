@@ -1,19 +1,18 @@
-import express from 'express'
-import config from 'config'
-import connect from './src/utils/connect';
-import logger from './src/utils/logger';
-import routes from './src/route';
-
+import express from "express";
+import config from "config";
+import db from "./src/utils/connect";
+import logger from "./src/utils/logger";
+import routes from "./src/route";
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded());
 
+const PORT = config.get<number>("port");
 
-const PORT =config.get<number>("port");
+app.listen(PORT, async () => {
+  logger.info(`App is running at http://localhost:${PORT}`);
+  await db.connect();
 
-
-app.listen(PORT, async() => {
-    logger.info(`App is running at http://localhost:${PORT}`);
-    await connect();
-
-    routes(app);
+  routes(app);
 });
