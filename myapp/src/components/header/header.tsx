@@ -24,6 +24,9 @@ export default function Header() {
     const handleLogin = () => {
         navigate("/login");
     };
+    const handleOpenCart = () => {
+        navigate("/cart");
+    };
     return (
         <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
@@ -73,6 +76,7 @@ export default function Header() {
                                 <button
                                     type="button"
                                     className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mr-4"
+                                    onClick={handleOpenCart}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

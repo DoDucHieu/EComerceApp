@@ -1,5 +1,17 @@
 import actionType from "./actionType";
+import userApi from "../../api/userApi";
+import { UserType } from "../../type";
 import axios from "axios";
+
+const login = (userInfor: UserType): any => {
+    return async (dispatch: any, getState: any) => {
+        const res = await userApi.login(userInfor);
+        dispatch({
+            type: actionType.LOGIN_SUCCESS,
+            payload: res.data,
+        });
+    };
+};
 
 const addToCart = (data: any) => {
     return async (dispatch: any, getState: any) => {
@@ -24,8 +36,9 @@ const removeFromCart = (url: string) => {
     };
 };
 
-const todoAction = {
+const userAction = {
+    login,
     addToCart,
     removeFromCart,
 };
-export default todoAction;
+export default userAction;

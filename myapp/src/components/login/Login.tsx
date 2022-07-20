@@ -1,35 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import userAction from "../../store/action/userAction";
+import { UserType } from "../../type";
+import axios from "axios";
 
-const fakeAccount = [
-    {
-        email: "ngobakha@gmail.com",
-        password: "ngobakha",
-    },
-    {
-        email: "huanhoahong@gmail.com",
-        password: "huanhoahong",
-    },
-];
-
-const Login = () => {
+const Login = (props: object) => {
     const navigate = useNavigate();
+
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = () => {
-        let check = false;
-        fakeAccount.map((item) => {
-            if (item.email === email) {
-                if (item.password === password) {
-                    check = true;
-                    navigate("/");
-                }
-            }
-        });
-        if (!check) {
-            alert("Email or password incorrect!");
+    const handleLogin = async () => {
+        try {
+            const data: UserType = {
+                email,
+                password,
+            };
+            await dispatch(userAction.login(data));
+        } catch (e: any) {
+            console.log(e.response.data);
         }
     };
 
