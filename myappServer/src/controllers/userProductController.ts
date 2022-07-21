@@ -1,6 +1,26 @@
 import { Request, Response, NextFunction } from "express";
 import UserProduct from "../models/userProduct.model";
 
+const getAllCartByUserEmail = async (req: Request, res: Response) => {
+  try {
+    const userEmail = req.query.email;
+    console.log("check :", req.query);
+
+    const result = await UserProduct.find({ email: userEmail });
+    console.log("res: ", result);
+    return res.status(200).json({
+      errCode: 0,
+      errMessage: "Get all cart success!",
+      data: result,
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      errCode: 1,
+      errMessage: e.message,
+    });
+  }
+};
+
 const addToCart = async (req: Request, res: Response) => {
   try {
     const userProductData = req.body;
@@ -48,6 +68,7 @@ const updateCart = async (req: Request, res: Response) => {
 };
 
 const userProductController = {
+  getAllCartByUserEmail,
   addToCart,
   updateCart,
 };

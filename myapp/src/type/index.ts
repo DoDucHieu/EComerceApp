@@ -13,6 +13,8 @@ export type UserType = {
 };
 
 export type ProductType = {
+    _id?: string;
     productName: string;
     price: string;
+    imgUrl?: string;
 };

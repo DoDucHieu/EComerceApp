@@ -3,7 +3,6 @@ import actionType from "../action/actionType";
 const initialState = {
     email: "",
     accessToken: "",
-    cart: ["leesin", "yasua"],
 };
 
 const userReducer = (state = initialState, action: any) => {
@@ -14,15 +13,13 @@ const userReducer = (state = initialState, action: any) => {
                 email: action.payload.email,
                 accessToken: action.payload.accessToken,
             };
-        case actionType.ADD_TO_CART:
+        case actionType.LOG_OUT:
             return {
                 ...state,
-                cart: [...state.cart, action.payload],
+                email: "",
+                accessToken: "",
             };
-        case actionType.REMOVE_FROM_CART:
-            return {
-                ...state,
-            };
+
         default:
             return state;
     }

@@ -21,6 +21,7 @@ let routes = (app: Express) => {
   app.post("/create-new-product", productController.createNewProduct);
 
   //cart
+  app.get("/get-all-cart", userProductController.getAllCartByUserEmail);
   app.post("/add-to-cart", userProductController.addToCart);
   app.post("/update-cart", userProductController.updateCart);
 };

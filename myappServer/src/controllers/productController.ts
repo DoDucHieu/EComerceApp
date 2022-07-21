@@ -27,6 +27,7 @@ const createNewProduct = async (req: Request, res: Response) => {
     const result = await Product.create({
       productName: productData.productName,
       price: productData.price,
+      imgUrl: productData?.imgUrl,
     });
     return res.status(200).json({
       errCode: 0,

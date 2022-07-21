@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import userAction from "../../store/action/userAction";
 import { UserType } from "../../type";
-import axios from "axios";
 
 const Login = (props: object) => {
+    console.log("login");
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const userAccessToken = useSelector(
+        (state: any) => state.userReducer.accessToken,
+    );
 
     const handleLogin = async () => {
         try {
@@ -21,9 +25,15 @@ const Login = (props: object) => {
             };
             await dispatch(userAction.login(data));
         } catch (e: any) {
-            console.log(e.response.data);
+            console.log(e);
         }
     };
+
+    useEffect(() => {
+        if (userAccessToken) {
+            navigate("/");
+        }
+    }, [userAccessToken]);
 
     return (
         <>

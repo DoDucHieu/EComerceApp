@@ -13,32 +13,16 @@ const login = (userInfor: UserType): any => {
     };
 };
 
-const addToCart = (data: any) => {
+const logout = (): any => {
     return async (dispatch: any, getState: any) => {
-        if (data) {
-            dispatch({
-                type: actionType.ADD_TO_CART,
-                payload: data,
-            });
-        }
-    };
-};
-
-const removeFromCart = (url: string) => {
-    return async (dispatch: any, getState: any) => {
-        const res = await axios.get(url);
-        if (res) {
-            dispatch({
-                type: actionType.REMOVE_FROM_CART,
-                payload: res.data,
-            });
-        }
+        dispatch({
+            type: actionType.LOG_OUT,
+        });
     };
 };
 
 const userAction = {
     login,
-    addToCart,
-    removeFromCart,
+    logout,
 };
 export default userAction;
