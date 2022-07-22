@@ -28,8 +28,8 @@ axiosConfig.interceptors.response.use(
         // Any status code that lie within the range of 2xx cause this function to trigger
         // Do something with response data
 
-        if (response.data?.errMessage) {
-            toast(response.data.errMessage, { type: "success" });
+        if (response.data?.errCode === 1) {
+            toast(response.data.errMessage, { type: "error" });
         }
 
         return response;

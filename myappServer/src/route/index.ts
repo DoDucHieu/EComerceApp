@@ -22,8 +22,8 @@ let routes = (app: Express) => {
 
   //cart
   app.get("/get-all-cart", userProductController.getAllCartByUserEmail);
-  app.post("/add-to-cart", userProductController.addToCart);
-  app.post("/update-cart", userProductController.updateCart);
+  app.post("/add-to-cart", userProductController.AddOrUpdateCart);
+  app.post("/remove-from-cart", userProductController.removeFromCart);
 };
 
 export default routes;

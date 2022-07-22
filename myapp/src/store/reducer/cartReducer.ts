@@ -1,24 +1,20 @@
+import { CartType } from "../../type";
 import actionType from "../action/actionType";
 
-const initialState = {
-    arrProduct: ["Iphone 11"],
+export interface ICartReducer {
+    arrProduct: CartType[];
+}
+
+const initialState: ICartReducer = {
+    arrProduct: [],
 };
 
-const cartReducer = (state = initialState, action: any) => {
+const cartReducer = (state: ICartReducer = initialState, action: any) => {
     switch (action.type) {
         case actionType.GET_ALL_CART:
             return {
                 ...state,
-                arrProduct: [...state.arrProduct, action.payload],
-            };
-        case actionType.ADD_TO_CART:
-            return {
-                ...state,
-                arrProduct: [...state.arrProduct, action.payload],
-            };
-        case actionType.REMOVE_FROM_CART:
-            return {
-                ...state,
+                arrProduct: [...action.payload],
             };
         default:
             return state;

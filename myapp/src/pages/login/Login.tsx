@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import userAction from "../../store/action/userAction";
 import { UserType } from "../../type";
+import cartAction from "../../store/action/cartAction";
 
 const Login = (props: object) => {
     console.log("login");
@@ -28,9 +29,11 @@ const Login = (props: object) => {
             console.log(e);
         }
     };
+    const userEmail = useSelector((state: any) => state.userReducer.email);
 
     useEffect(() => {
         if (userAccessToken) {
+            dispatch(cartAction.getAllCart(userEmail));
             navigate("/");
         }
     }, [userAccessToken]);

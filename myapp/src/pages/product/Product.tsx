@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import productApi from "../../api/productApi";
-import { ProductType } from "../../type";
+import userProductApi from "../../api/userProductApi";
+import cartAction from "../../store/action/cartAction";
+import { CartType, ProductType } from "../../type";
 
 const Product = () => {
     const [arrProduct, setArrProduct] = useState([]);
@@ -13,6 +16,22 @@ const Product = () => {
     useEffect(() => {
         getAllProduct();
     }, []);
+
+    const userEmail = useSelector((state: any) => state.userReducer.email);
+    const dispatch = useDispatch();
+    const handleAddToCart = async (cart: ProductType) => {
+        try {
+            const data: CartType = {
+                email: userEmail,
+                productId: cart?._id,
+                quantity: 1,
+            };
+            await userProductApi.addToCart(data);
+            await dispatch(cartAction.getAllCart(userEmail));
+        } catch (e) {
+            console.log(e);
+        }
+    };
     return (
         <>
             <div className="bg-white">
@@ -38,7 +57,12 @@ const Product = () => {
                                         <p className="mt-1 text-lg font-medium text-gray-900">
                                             {`${item.price}$`}
                                         </p>
-                                        <button className="block w-full px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-300 transform bg-teal-400 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80">
+                                        <button
+                                            className="block w-full px-4 py-2 font-medium tracking-wide text-center text-white capitalize transition-colors duration-300 transform bg-teal-400 rounded-md hover:bg-teal-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
+                                            onClick={() =>
+                                                handleAddToCart(item)
+                                            }
+                                        >
                                             Add to cart
                                         </button>
                                     </div>

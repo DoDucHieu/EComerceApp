@@ -4,29 +4,48 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import userAction from "../../store/action/userAction";
-
-interface Navigation {
-    name: string;
-    href: string;
-}
+import cartAction from "../../store/action/cartAction";
+import { CartType } from "../../type";
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
 }
 
+const navigation = [
+    { name: "Home page", href: "/" },
+    { name: "Product", href: "/product" },
+];
+
 export default function Header() {
     const location = useLocation();
     const navigate = useNavigate();
-    const navigation = [
-        { name: "Home page", href: "/" },
-        { name: "Product", href: "/product" },
-        { name: "About", href: "/about" },
-    ];
 
     const dispatch = useDispatch();
+
     const userAccessToken = useSelector(
         (state: any) => state.userReducer.accessToken,
     );
+    const userEmail = useSelector((state: any) => state.userReducer.email);
+    const arrProduct = useSelector(
+        (state: any) => state.cartReducer.arrProduct,
+    );
+
+    const handleQuantityProduct = (arr: CartType[]) => {
+        const num = arr.reduce((total: any, item: CartType) => {
+            return total + item.quantity;
+        }, 0);
+        return num;
+    };
+    const num = handleQuantityProduct(arrProduct);
+
+    const getAllCart = async (email: any) => {
+        await dispatch(cartAction.getAllCart(email));
+    };
+    useEffect(() => {
+        if (userEmail) {
+            getAllCart(userEmail);
+        }
+    }, []);
 
     const handleLogin = () => {
         navigate("/login");
@@ -38,6 +57,8 @@ export default function Header() {
     const handleOpenCart = () => {
         navigate("/cart");
     };
+    console.log("header");
+
     return (
         <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
@@ -86,7 +107,7 @@ export default function Header() {
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <button
                                     type="button"
-                                    className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mr-4"
+                                    className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white mr-4 flex"
                                     onClick={handleOpenCart}
                                 >
                                     <svg
@@ -103,6 +124,9 @@ export default function Header() {
                                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                                         />
                                     </svg>
+                                    <span className="absolute mt-3 ml-6">
+                                        {num && num}
+                                    </span>
                                 </button>
                                 {userAccessToken ? (
                                     <button
@@ -170,7 +194,4 @@ export default function Header() {
             )}
         </Disclosure>
     );
-}
-function useHistory() {
-    throw new Error("Function not implemented.");
 }

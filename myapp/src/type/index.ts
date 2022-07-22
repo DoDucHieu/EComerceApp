@@ -1,7 +1,8 @@
 export type CartType = {
-    email: string;
-    productId: string;
-    quantity: number;
+    email?: string;
+    productId?: string;
+    quantity?: number;
+    price?: string;
 };
 
 export type UserType = {
@@ -13,7 +14,7 @@ export type UserType = {
 };
 
 export type ProductType = {
-    _id?: string;
+    _id: string;
     productName: string;
     price: string;
     imgUrl?: string;

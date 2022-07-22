@@ -6,7 +6,7 @@ import Header from "./components/header/header";
 
 import HomePage from "./pages/homePage/HomePage";
 import Product from "./pages/product/Product";
-import Login from "./components/login/Login";
+import Login from "./pages/login/Login";
 import { useSelector } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
