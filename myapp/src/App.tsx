@@ -1,44 +1,56 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-import Cart from "./pages/cart/Cart";
-import Header from "./components/header/header";
-
-import HomePage from "./pages/homePage/HomePage";
-import Product from "./pages/product/Product";
-import Login from "./pages/login/Login";
-import { useSelector } from "react-redux";
-
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { RootState } from "./store/store";
 
-function App() {
-    const userAccessToken = useSelector(
-        (state: RootState) => state.userReducer.accessToken,
-    );
+import { AuthRoute } from "./routes/authRoute";
+import { RouteApp } from "./type";
+import { Header } from "./components/header/header";
+import { HomePage } from "./pages/homePage/HomePage";
+import { Product } from "./pages/product/Product";
+import { Cart } from "./pages/cart/Cart";
+import { Login } from "./pages/login/Login";
+
+const arrRoute: RouteApp[] = [
+    {
+        href: "/",
+        isPublic: true,
+        element: <HomePage />,
+    },
+    {
+        href: "/product",
+        isPublic: true,
+        element: <Product />,
+    },
+    {
+        href: "/cart",
+        isPublic: false,
+        element: <Cart />,
+    },
+    {
+        href: "/login",
+        isPublic: true,
+        element: <Login />,
+    },
+];
+
+export const App = () => {
     return (
         <>
             <ToastContainer />
             <Header />
             <Routes>
-                <Route path="/" element={<HomePage />}></Route>
-                <Route path="/product" element={<Product />}></Route>
-                <Route
-                    path="/cart"
-                    element={
-                        userAccessToken ? (
-                            <Cart />
-                        ) : (
-                            <Navigate to="/login" replace />
-                        )
-                    }
-                ></Route>
-                <Route path="/about" element={<HomePage />}></Route>
-                <Route path="/login" element={<Login />}></Route>
+                {arrRoute.map((item: RouteApp) => {
+                    return item.isPublic ? (
+                        <Route path={item.href} element={item.element} />
+                    ) : (
+                        <Route
+                            path={item.href}
+                            element={<AuthRoute>{item.element}</AuthRoute>}
+                        ></Route>
+                    );
+                })}
             </Routes>
         </>
     );
-}
-
-export default App;
+};

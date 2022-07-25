@@ -1,8 +1,8 @@
-import actionType from "./actionType";
-import userApi from "../../api/userApi";
 import { UserType } from "../../type";
 import { Dispatch } from "redux";
 import { RootState } from "../store";
+import { actionType } from "./actionType";
+import { userApi } from "../../api/userApi";
 
 const login = (userInfor: UserType) => {
     return async (dispatch: Dispatch, getState: RootState) => {
@@ -22,8 +22,7 @@ const logout = () => {
     };
 };
 
-const userAction = {
+export const userAction = {
     login,
     logout,
 };
-export default userAction;

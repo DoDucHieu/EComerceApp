@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import productApi from "../../api/productApi";
-import userProductApi from "../../api/userProductApi";
-import cartAction from "../../store/action/cartAction";
+import { productApi } from "../../api/productApi";
+import { userProductApi } from "../../api/userProductApi";
+import { cartAction } from "../../store/action/cartAction";
+
 import { AppDispatch, RootState } from "../../store/store";
 import { CartType, ProductType } from "../../type";
 
-const Product = () => {
+export const Product = () => {
     const [arrProduct, setArrProduct] = useState([]);
 
     const getAllProduct = async () => {
@@ -77,5 +78,3 @@ const Product = () => {
         </>
     );
 };
-
-export default Product;

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import userProductApi from "../../api/userProductApi";
-import cartAction from "../../store/action/cartAction";
+import { useNavigate } from "react-router-dom";
+import { userProductApi } from "../../api/userProductApi";
+import { cartAction } from "../../store/action/cartAction";
 import { RootState, AppDispatch } from "../../store/store";
-import { CartType, ProductType } from "../../type";
+import { CartType } from "../../type";
 
-const Cart = () => {
+export const Cart = () => {
+    const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
     const arrProduct = useSelector(
@@ -51,6 +53,9 @@ const Cart = () => {
         } catch (e) {
             console.log(e);
         }
+    };
+    const handleContinueShopping = () => {
+        navigate("/product");
     };
 
     return (
@@ -182,6 +187,7 @@ const Cart = () => {
                                     <button
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        onClick={handleContinueShopping}
                                     >
                                         Continue Shopping
                                         <span aria-hidden="true"> &rarr;</span>
@@ -195,5 +201,3 @@ const Cart = () => {
         </>
     );
 };
-
-export default Cart;

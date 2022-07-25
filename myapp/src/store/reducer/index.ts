@@ -1,14 +1,12 @@
 import { combineReducers } from "redux";
-import userReducer, { UserReducer } from "./userReducer";
-import cartReducer, { CartReducer } from "./cartReducer";
+import { cartReducer, CartReducer } from "./cartReducer";
+import { userReducer, UserReducer } from "./userReducer";
 
 export interface RootReducer {
     userReducer: UserReducer;
     cartReducer: CartReducer;
 }
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     userReducer,
     cartReducer,
 });
-
-export default rootReducer;

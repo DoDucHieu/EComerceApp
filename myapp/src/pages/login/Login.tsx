@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import userAction from "../../store/action/userAction";
 import { UserType } from "../../type";
-import cartAction from "../../store/action/cartAction";
 import { AppDispatch, RootState } from "../../store/store";
+import { userAction } from "../../store/action/userAction";
+import { cartAction } from "../../store/action/cartAction";
 
-const Login = (props: object) => {
+export const Login = (props: object) => {
     console.log("login");
     const navigate = useNavigate();
 
@@ -83,5 +83,3 @@ const Login = (props: object) => {
         </>
     );
 };
-
-export default Login;

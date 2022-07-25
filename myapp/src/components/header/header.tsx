@@ -3,12 +3,12 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import userAction from "../../store/action/userAction";
-import cartAction from "../../store/action/cartAction";
 import { CartType } from "../../type";
 import { RootState, AppDispatch } from "../../store/store";
+import { cartAction } from "../../store/action/cartAction";
+import { userAction } from "../../store/action/userAction";
 
-function classNames(...classes: any) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
 }
 
@@ -17,7 +17,7 @@ const navigation = [
     { name: "Product", href: "/product" },
 ];
 
-export default function Header() {
+export const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -34,10 +34,11 @@ export default function Header() {
     );
 
     const handleQuantityProduct = (arr: CartType[]) => {
-        const num = arr.reduce((total: any, item: CartType) => {
-            return total + item.quantity;
+        let total = 0;
+        arr.map((item: CartType) => {
+            total += item?.quantity ? item?.quantity : 0;
         }, 0);
-        return num;
+        return total;
     };
     const num = handleQuantityProduct(arrProduct);
 
@@ -197,4 +198,4 @@ export default function Header() {
             )}
         </Disclosure>
     );
-}
+};

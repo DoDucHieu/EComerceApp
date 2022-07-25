@@ -1,6 +1,6 @@
-import actionType from "./actionType";
-import userProductApi from "../../api/userProductApi";
+import { userProductApi } from "../../api/userProductApi";
 import { RootState, AppDispatch } from "../store";
+import { actionType } from "./actionType";
 
 const getAllCart = (email: string) => {
     return async (dispatch: AppDispatch, getState: RootState) => {
@@ -13,7 +13,6 @@ const getAllCart = (email: string) => {
     };
 };
 
-const cartAction = {
+export const cartAction = {
     getAllCart,
 };
-export default cartAction;

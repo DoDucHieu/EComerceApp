@@ -1,4 +1,4 @@
-import actionType from "../action/actionType";
+import { actionType } from "../action/actionType";
 
 export interface UserReducer {
     email: string;
@@ -10,7 +10,7 @@ const initialState: UserReducer = {
     accessToken: "",
 };
 
-const userReducer = (state: UserReducer = initialState, action: any) => {
+export const userReducer = (state: UserReducer = initialState, action: any) => {
     switch (action.type) {
         case actionType.LOGIN_SUCCESS:
             return {
@@ -29,5 +29,3 @@ const userReducer = (state: UserReducer = initialState, action: any) => {
             return state;
     }
 };
-
-export default userReducer;

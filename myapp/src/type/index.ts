@@ -20,3 +20,9 @@ export type ProductType = {
     price: string;
     imgUrl?: string;
 };
+
+export interface RouteApp {
+    href: string;
+    isPublic: boolean;
+    element: JSX.Element;
+}
