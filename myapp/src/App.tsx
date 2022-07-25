@@ -11,10 +11,11 @@ import { useSelector } from "react-redux";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { RootState } from "./store/store";
 
 function App() {
     const userAccessToken = useSelector(
-        (state: any) => state.userReducer.accessToken,
+        (state: RootState) => state.userReducer.accessToken,
     );
     return (
         <>

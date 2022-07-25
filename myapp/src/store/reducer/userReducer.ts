@@ -1,16 +1,16 @@
 import actionType from "../action/actionType";
 
-export interface IUserReducer {
+export interface UserReducer {
     email: string;
     accessToken: string;
 }
 
-const initialState: IUserReducer = {
+const initialState: UserReducer = {
     email: "",
     accessToken: "",
 };
 
-const userReducer = (state: IUserReducer = initialState, action: any) => {
+const userReducer = (state: UserReducer = initialState, action: any) => {
     switch (action.type) {
         case actionType.LOGIN_SUCCESS:
             return {

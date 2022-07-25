@@ -14,16 +14,28 @@ let routes = (app: Express) => {
   app.post("/login", authController.login);
 
   //user
-  app.put("/update-user", userController.updateUser);
+  app.put("/update-user", middleWare.verifyToken, userController.updateUser);
 
   //product
   app.get("/get-all-product", productController.getAllProduct);
   app.post("/create-new-product", productController.createNewProduct);
 
   //cart
-  app.get("/get-all-cart", userProductController.getAllCartByUserEmail);
-  app.post("/add-to-cart", userProductController.AddOrUpdateCart);
-  app.post("/remove-from-cart", userProductController.removeFromCart);
+  app.get(
+    "/get-all-cart",
+    middleWare.verifyToken,
+    userProductController.getAllCartByUserEmail
+  );
+  app.post(
+    "/add-to-cart",
+    middleWare.verifyToken,
+    userProductController.AddOrUpdateCart
+  );
+  app.post(
+    "/remove-from-cart",
+    middleWare.verifyToken,
+    userProductController.removeFromCart
+  );
 };
 
 export default routes;

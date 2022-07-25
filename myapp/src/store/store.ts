@@ -21,4 +21,6 @@ const configureStore = {
     persistor,
 };
 
+export type RootState = ReturnType<typeof configureStore.store.getState>;
+export type AppDispatch = ReturnType<typeof configureStore.store.dispatch>;
 export default configureStore;

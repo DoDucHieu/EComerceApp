@@ -4,18 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import userAction from "../../store/action/userAction";
 import { UserType } from "../../type";
 import cartAction from "../../store/action/cartAction";
+import { AppDispatch, RootState } from "../../store/store";
 
 const Login = (props: object) => {
     console.log("login");
     const navigate = useNavigate();
 
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const userAccessToken = useSelector(
-        (state: any) => state.userReducer.accessToken,
+        (state: RootState) => state.userReducer.accessToken,
     );
 
     const handleLogin = async () => {
@@ -29,7 +30,9 @@ const Login = (props: object) => {
             console.log(e);
         }
     };
-    const userEmail = useSelector((state: any) => state.userReducer.email);
+    const userEmail = useSelector(
+        (state: RootState) => state.userReducer.email,
+    );
 
     useEffect(() => {
         if (userAccessToken) {

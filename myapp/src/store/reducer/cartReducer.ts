@@ -1,15 +1,16 @@
+import { Store } from "redux";
 import { CartType } from "../../type";
 import actionType from "../action/actionType";
 
-export interface ICartReducer {
+export interface CartReducer {
     arrProduct: CartType[];
 }
 
-const initialState: ICartReducer = {
+const initialState: CartReducer = {
     arrProduct: [],
 };
 
-const cartReducer = (state: ICartReducer = initialState, action: any) => {
+const cartReducer = (state: CartReducer = initialState, action: any) => {
     switch (action.type) {
         case actionType.GET_ALL_CART:
             return {

@@ -1,10 +1,11 @@
 import actionType from "./actionType";
 import userApi from "../../api/userApi";
 import { UserType } from "../../type";
-import axios from "axios";
+import { Dispatch } from "redux";
+import { RootState } from "../store";
 
-const login = (userInfor: UserType): any => {
-    return async (dispatch: any, getState: any) => {
+const login = (userInfor: UserType) => {
+    return async (dispatch: Dispatch, getState: RootState) => {
         const res = await userApi.login(userInfor);
         dispatch({
             type: actionType.LOGIN_SUCCESS,
@@ -13,8 +14,8 @@ const login = (userInfor: UserType): any => {
     };
 };
 
-const logout = (): any => {
-    return async (dispatch: any, getState: any) => {
+const logout = () => {
+    return async (dispatch: Dispatch, getState: RootState) => {
         dispatch({
             type: actionType.LOG_OUT,
         });

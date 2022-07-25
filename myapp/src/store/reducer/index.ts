@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import userReducer, { IUserReducer } from "./userReducer";
-import cartReducer, { ICartReducer } from "./cartReducer";
+import userReducer, { UserReducer } from "./userReducer";
+import cartReducer, { CartReducer } from "./cartReducer";
 
-export interface IRootReducer {
-    userReducer: IUserReducer;
-    cartReducer: ICartReducer;
+export interface RootReducer {
+    userReducer: UserReducer;
+    cartReducer: CartReducer;
 }
 const rootReducer = combineReducers({
     userReducer,

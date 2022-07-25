@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import userAction from "../../store/action/userAction";
 import cartAction from "../../store/action/cartAction";
 import { CartType } from "../../type";
+import { RootState, AppDispatch } from "../../store/store";
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
@@ -20,14 +21,16 @@ export default function Header() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const userAccessToken = useSelector(
-        (state: any) => state.userReducer.accessToken,
+        (state: RootState) => state.userReducer.accessToken,
     );
-    const userEmail = useSelector((state: any) => state.userReducer.email);
+    const userEmail = useSelector(
+        (state: RootState) => state.userReducer.email,
+    );
     const arrProduct = useSelector(
-        (state: any) => state.cartReducer.arrProduct,
+        (state: RootState) => state.cartReducer.arrProduct,
     );
 
     const handleQuantityProduct = (arr: CartType[]) => {
@@ -38,7 +41,7 @@ export default function Header() {
     };
     const num = handleQuantityProduct(arrProduct);
 
-    const getAllCart = async (email: any) => {
+    const getAllCart = async (email: string) => {
         await dispatch(cartAction.getAllCart(email));
     };
     useEffect(() => {

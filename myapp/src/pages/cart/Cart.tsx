@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import userProductApi from "../../api/userProductApi";
 import cartAction from "../../store/action/cartAction";
-import { IRootReducer } from "../../store/reducer";
+import { RootState, AppDispatch } from "../../store/store";
 import { CartType, ProductType } from "../../type";
 
 const Cart = () => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const arrProduct = useSelector(
-        (state: any) => state.cartReducer.arrProduct,
+        (state: RootState) => state.cartReducer.arrProduct,
     );
     const userEmail = useSelector(
-        (state: IRootReducer) => state.userReducer.email,
+        (state: RootState) => state.userReducer.email,
     );
 
     function handleCalculateTotal(arrProduct: CartType[]) {

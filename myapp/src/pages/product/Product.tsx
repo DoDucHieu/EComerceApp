@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import productApi from "../../api/productApi";
 import userProductApi from "../../api/userProductApi";
 import cartAction from "../../store/action/cartAction";
+import { AppDispatch, RootState } from "../../store/store";
 import { CartType, ProductType } from "../../type";
 
 const Product = () => {
@@ -17,8 +18,10 @@ const Product = () => {
         getAllProduct();
     }, []);
 
-    const userEmail = useSelector((state: any) => state.userReducer.email);
-    const dispatch = useDispatch();
+    const userEmail = useSelector(
+        (state: RootState) => state.userReducer.email,
+    );
+    const dispatch: AppDispatch = useDispatch();
     const handleAddToCart = async (cart: ProductType) => {
         try {
             const data: CartType = {
