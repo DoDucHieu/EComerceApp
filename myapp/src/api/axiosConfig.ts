@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import configureStore from "../store/store";
+import { configureStore } from "../store/store";
 
 const axiosConfig = axios.create({ baseURL: "http://localhost:8080" });
 
