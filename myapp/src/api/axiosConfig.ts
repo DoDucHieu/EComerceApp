@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { configureStore } from "../store/store";
 

@@ -32,7 +32,53 @@ const signUp = async (req: Request, res: Response) => {
   }
 };
 
+const generateToken = (payload: any) => {
+  const secretAccessToken = config.get<string>("ACCESS_TOKEN_SECRET");
+  const secretRefreshToken = config.get<string>("REFRESH_TOKEN_SECRET");
+  const accessToken = jwt.sign(payload, secretAccessToken, {
+    expiresIn: "30m",
+  });
+  const refreshToken = jwt.sign(payload, secretRefreshToken, {
+    expiresIn: "30m",
+  });
+  return { accessToken, refreshToken };
+};
+
 const login = async (req: Request, res: Response) => {
+  try {
+    const userData = req.body;
+    const checkExist = await User.findOne({
+      email: userData.email,
+    });
+    if (checkExist) {
+      const compare = await comparePassword(
+        userData.password,
+        checkExist.password
+      );
+      if (compare) {
+        let { accessToken, refreshToken } = generateToken(userData);
+        return res.status(200).json({
+          errCode: 0,
+          errMessage: "Login success",
+          email: userData.email,
+          accessToken,
+          refreshToken,
+        });
+      } else {
+        throw new Error("Password incorrect!");
+      }
+    } else {
+      throw new Error("Email incorrect!");
+    }
+  } catch (e: any) {
+    return res.status(500).json({
+      errCode: 1,
+      errMessage: e.message,
+    });
+  }
+};
+
+const logout = async (req: Request, res: Response) => {
   try {
     const userData = req.body;
     const checkExist = await User.findOne({
@@ -81,6 +127,7 @@ const comparePassword = async (
 const authController = {
   signUp,
   login,
+  logout,
 };
 
 export default authController;

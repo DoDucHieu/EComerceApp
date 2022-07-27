@@ -61,7 +61,7 @@ export const Header = () => {
     const handleOpenCart = () => {
         navigate("/cart");
     };
-    console.log("header");
+    console.log("header: ", arrProduct);
 
     return (
         <Disclosure as="nav" className="bg-gray-800">

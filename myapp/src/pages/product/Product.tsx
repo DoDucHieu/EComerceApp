@@ -23,15 +23,17 @@ export const Product = () => {
         (state: RootState) => state.userReducer.email,
     );
     const dispatch: AppDispatch = useDispatch();
-    const handleAddToCart = async (cart: ProductType) => {
+    const handleAddToCart = async (product: ProductType) => {
         try {
             const data: CartType = {
                 email: userEmail,
-                productId: cart?._id,
+                productId: product?._id,
                 quantity: 1,
+                productName: product?.productName,
+                imgUrl: product?.imgUrl,
+                price: Number(product?.price),
             };
-            await userProductApi.addToCart(data);
-            await dispatch(cartAction.getAllCart(userEmail));
+            await dispatch(cartAction.addToCart(data));
         } catch (e) {
             console.log(e);
         }

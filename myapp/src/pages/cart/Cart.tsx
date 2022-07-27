@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userProductApi } from "../../api/userProductApi";
@@ -10,7 +9,7 @@ export const Cart = () => {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
-    const arrProduct = useSelector(
+    const arrProduct: CartType[] = useSelector(
         (state: RootState) => state.cartReducer.arrProduct,
     );
     const userEmail = useSelector(
@@ -19,14 +18,16 @@ export const Cart = () => {
 
     function handleCalculateTotal(arrProduct: CartType[]) {
         let total = 0;
-        arrProduct.map((item: any) => {
-            total += item?.quantity * item?.productId?.price;
+        arrProduct.map((item: CartType) => {
+            if (item.price && item.quantity) {
+                total += item.quantity * item.price;
+            }
         });
         return total;
     }
     const total = handleCalculateTotal(arrProduct);
     const handleIncreaseDecrease = async (
-        productId: string,
+        productId: string | undefined,
         quantity: number,
     ) => {
         try {
@@ -42,7 +43,7 @@ export const Cart = () => {
         }
     };
 
-    const handleRemoveFromCart = async (productId: string) => {
+    const handleRemoveFromCart = async (productId: string | undefined) => {
         try {
             const data: CartType = {
                 email: userEmail,
@@ -69,21 +70,15 @@ export const Cart = () => {
                                 className="-my-6 divide-y divide-gray-200"
                             >
                                 {arrProduct && arrProduct.length > 0 ? (
-                                    arrProduct.map((product: any) => (
+                                    arrProduct.map((product: CartType) => (
                                         <li
                                             key={product?.productId}
                                             className="flex py-6"
                                         >
                                             <div className="h-40 w-40 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                 <img
-                                                    src={
-                                                        product?.productId
-                                                            .imgUrl
-                                                    }
-                                                    alt={
-                                                        product?.productId
-                                                            ?.productName
-                                                    }
+                                                    src={product?.imgUrl}
+                                                    alt={product?.productName}
                                                     className="h-full w-full object-cover object-center"
                                                 />
                                             </div>
@@ -94,19 +89,17 @@ export const Cart = () => {
                                                         <h3>
                                                             <p>
                                                                 {
-                                                                    product
-                                                                        ?.productId
-                                                                        ?.productName
+                                                                    product?.productName
                                                                 }
                                                             </p>
                                                         </h3>
                                                         <p className="ml-4 text-red-600">
-                                                            {`${product?.productId?.price} $`}
+                                                            {`${product?.price} $`}
                                                         </p>
                                                     </div>
                                                     <p className="mt-1 text-sm text-indigo-600">
                                                         Quantity:{" "}
-                                                        {product.quantity}
+                                                        {product?.quantity}
                                                     </p>
                                                 </div>
                                                 <div className="flex flex-1 items-end justify-between text-sm mr-10">
@@ -114,12 +107,11 @@ export const Cart = () => {
                                                         <button
                                                             className="mx-2 bg-gray-200 w-8 h-8 rounded"
                                                             onClick={() => {
-                                                                product?.quantity >
-                                                                1
+                                                                product.quantity &&
+                                                                product.quantity >
+                                                                    1
                                                                     ? handleIncreaseDecrease(
-                                                                          product
-                                                                              ?.productId
-                                                                              ?._id,
+                                                                          product?.productId,
                                                                           -1,
                                                                       )
                                                                     : handleRemoveFromCart(
@@ -133,9 +125,7 @@ export const Cart = () => {
                                                             className="mx-2 bg-gray-200 w-8 h-8 rounded"
                                                             onClick={() =>
                                                                 handleIncreaseDecrease(
-                                                                    product
-                                                                        ?.productId
-                                                                        ?._id,
+                                                                    product?.productId,
                                                                     1,
                                                                 )
                                                             }
@@ -150,9 +140,7 @@ export const Cart = () => {
                                                             className="font-medium text-indigo-600 hover:text-indigo-500 bg-gray-200 h-8 rounded px-4"
                                                             onClick={() =>
                                                                 handleRemoveFromCart(
-                                                                    product
-                                                                        ?.productId
-                                                                        ?._id,
+                                                                    product?.productId,
                                                                 )
                                                             }
                                                         >
