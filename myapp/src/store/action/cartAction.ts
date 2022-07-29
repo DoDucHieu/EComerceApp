@@ -4,7 +4,7 @@ import { RootState, AppDispatch } from "../store";
 import { actionType } from "./actionType";
 
 const getAllCart = (email: string) => {
-    return async (dispatch: AppDispatch, getState: RootState) => {
+    return async (dispatch: AppDispatch, getState: () => RootState) => {
         const res = await userProductApi.getAll(email);
 
         const arrData = res?.data?.data;
@@ -25,21 +25,40 @@ const getAllCart = (email: string) => {
 };
 
 const addToCart = (data: CartType) => {
-    return async (dispatch: AppDispatch, getState: RootState) => {
-        const res: any = await userProductApi.addToCart(data);
+    return async (dispatch: AppDispatch, getState: () => RootState) => {
+        await userProductApi.addToCart(data);
+        let arr: CartType[] = [...getState().cartReducer.arrProduct];
+        let checkExist = false;
+        arr.forEach((product: CartType) => {
+            if (
+                product.productId === data.productId &&
+                product.quantity &&
+                data.quantity
+            ) {
+                checkExist = true;
+                product.quantity += data.quantity;
+            }
+        });
+        if (!checkExist) {
+            arr = [...arr, data];
+        }
         dispatch({
             type: actionType.ADD_TO_CART,
-            payload: data,
+            payload: arr,
         });
     };
 };
 
 const removeFromCart = (data: CartType) => {
-    return async (dispatch: AppDispatch, getState: RootState) => {
-        const res: any = await userProductApi.removeFromCart(data);
+    return async (dispatch: AppDispatch, getState: () => RootState) => {
+        await userProductApi.removeFromCart(data);
+        const arr: CartType[] = getState().cartReducer.arrProduct;
+        const newArr = arr.filter((item) => {
+            return item.productId !== data.productId;
+        });
         dispatch({
             type: actionType.REMOVE_FROM_CART,
-            payload: data,
+            payload: newArr,
         });
     };
 };

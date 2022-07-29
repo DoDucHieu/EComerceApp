@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { productApi } from "../../api/productApi";
-import { userProductApi } from "../../api/userProductApi";
 import { cartAction } from "../../store/action/cartAction";
 
 import { AppDispatch, RootState } from "../../store/store";
